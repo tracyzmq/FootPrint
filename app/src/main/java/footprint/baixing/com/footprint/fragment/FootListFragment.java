@@ -1,11 +1,15 @@
 package footprint.baixing.com.footprint.fragment;
 
+import android.content.Intent;
+
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import footprint.baixing.com.footprint.R;
+import footprint.baixing.com.footprint.activity.WebViewActivity_;
 import footprint.baixing.com.footprint.adapter.FootListAdapter;
 import footprint.baixing.com.footprint.data.Foot;
 import footprint.baixing.com.footprint.data.FootPrint;
@@ -43,18 +47,20 @@ public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapte
         return footPrints;
     }
 
-//    @Override
-//    FootListAdapter createAdapter() {
-//        return new FootListAdapter(getActivity(), listData);
-//    }
+    @Override
+    FootListAdapter createAdapter() {
+        adapter = new FootListAdapter(getActivity());
+        adapter.setData(listData);
+        return adapter;
+    }
 
-//    @ItemClick
-//    void listview(FootPrint footPrint) {
-//        Intent intent = new Intent(getActivity(), WebViewActivity_.class);
-//        if(null != footPrint && null != footPrint.getFoot()) {
-//            intent.putExtra("title", footPrint.getFoot().getTitle());
-//            intent.putExtra("url", footPrint.getFoot().getUrl());
-//            startActivity(intent);
-//        }
-//    }
+    @ItemClick
+    void listview(FootPrint footPrint) {
+        Intent intent = new Intent(getActivity(), WebViewActivity_.class);
+        if(null != footPrint && null != footPrint.getFoot()) {
+            intent.putExtra("title", footPrint.getFoot().getTitle());
+            intent.putExtra("url", footPrint.getFoot().getUrl());
+            startActivity(intent);
+        }
+    }
 }

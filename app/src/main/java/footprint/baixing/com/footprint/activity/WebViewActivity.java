@@ -1,7 +1,10 @@
 package footprint.baixing.com.footprint.activity;
 
 import android.support.v7.app.ActionBar;
+import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -9,12 +12,15 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import footprint.baixing.com.footprint.R;
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * Created by zhangtracy on 15/7/26.
  */
 @EActivity(R.layout.activity_webview)
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity implements OnRefreshListener{
     @Extra
     String title;
 
@@ -24,13 +30,40 @@ public class WebViewActivity extends BaseActivity {
     @ViewById
     WebView wv;
 
+    @ViewById
+    PullToRefreshLayout ptr_layout;
+
     @Override
     public String getActionBarTitle() {
         return title;
     }
 
     @AfterViews
-    void initViews() {
+    public void initView() {
+        ActionBarPullToRefresh.from(this)
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(ptr_layout);
+
+        ptr_layout.setRefreshing(true);
+        wv.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {  //重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, android.net.http.SslError error) { // 重写此方法可以让webview处理https请求
+                handler.proceed();
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                ptr_layout.setRefreshing(false);
+            }
+        });
         wv.loadUrl(url);
     }
 
@@ -38,5 +71,10 @@ public class WebViewActivity extends BaseActivity {
     public void initActionBar(ActionBar actionBar) {
         //TODO:
         actionBar.getCustomView();
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        wv.loadUrl(url);
     }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 
@@ -31,7 +32,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
  * Created by zhangtracy on 15/7/25.
  */
 @EFragment(R.layout.fragment_list)
-public abstract class BaseListFragment<T extends Serializable, S extends BaseAdapter> extends Fragment{
+public abstract class BaseListFragment<T extends Serializable, S extends BaseAdapter> extends Fragment implements AbsListView.OnScrollListener, OnRefreshListener{
 
     @ViewById
     PullToRefreshLayout ptr_layout;
@@ -45,6 +46,7 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
     List<T> listData = new ArrayList<T>();
 
     abstract List<T> getMore(int from, int size);
+    abstract S createAdapter();
 
     S adapter;
 
@@ -69,33 +71,23 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
         initFooterView(getActivity());
         ActionBarPullToRefresh.from(getActivity())
                 .allChildrenArePullable()
-                .listener(new OnRefreshListener() {
-                    @Override
-                    public void onRefreshStarted(View view) {
-                        processRefresh();
-                    }
-                })
+                .listener(this)
                 .setup(ptr_layout);
 
-        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE && first + visCount >= total && total != 0) {
-                    if (!isCompleted) {
-                        showGetMoreRefreshing();
-                        processGetMore();
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                first = firstVisibleItem;
-                visCount = visibleItemCount;
-                total = totalItemCount;
-            }
-        });
+        listview.setOnScrollListener(this);
         ptr_layout.setRefreshing(true);
+        processRefresh();
+    }
+
+    @UiThread
+    void setUI() {
+        ptr_layout.setRefreshing(false);
+        if(null == adapter) {
+            adapter = createAdapter();
+            listview.setAdapter(adapter);
+        } else {
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Background
@@ -105,23 +97,18 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
         }
 
         List<T> list = getMore(current, Constant.PER_PAGE);
-        if(null != list && list.size() > 0 && null != adapter) {
+        if(null != list && list.size() > 0) {
             listData.addAll(list);
             if (list.size() == Constant.PER_PAGE) {
                 current += Constant.PER_PAGE;
+                setUI();
             } else {
                 showFooterOnComplete();
             }
-            adapter.notifyDataSetChanged();
-        } else if(current == 0 && list.size() == 0) {
-            View view = new View(getActivity());
-            view.setBackgroundColor(highlighted_text_material_light);
-            listview.setEmptyView(view);
-        }
-        else {
+        } else {
             showFooterOnComplete();
         }
-        ptr_layout.setRefreshing(false);
+
     }
 
     public void processRefresh() {
@@ -144,7 +131,9 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
         mFooterView.setVisibility(View.GONE);
     }
 
+    @UiThread
     public void showFooterOnComplete () {
+        ptr_layout.setRefreshing(false);
         isCompleted = true;
         if(null != mFooterView && null != tvFooter && null !=  pbFooter) {
             mFooterView.setVisibility(View.VISIBLE);
@@ -153,11 +142,34 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
         }
     }
 
+    @UiThread
     public void showGetMoreRefreshing() {
         if(null != mFooterView && null != tvFooter && null !=  pbFooter) {
             mFooterView.setVisibility(View.VISIBLE);
             tvFooter.setText("正在加载中，请稍后...");
             pbFooter.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        processRefresh();
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        if (scrollState == SCROLL_STATE_IDLE && first + visCount >= total && total != 0) {
+            if (!isCompleted) {
+                showGetMoreRefreshing();
+                processGetMore();
+            }
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        first = firstVisibleItem;
+        visCount = visibleItemCount;
+        total = totalItemCount;
     }
 }
