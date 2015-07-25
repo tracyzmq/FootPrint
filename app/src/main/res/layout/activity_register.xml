@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".LoginActivity"
+    android:background="@color/green">
+
+    <LinearLayout
+        android:id="@+id/llRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_white_corner"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_middle"
+            android:hint="@string/hint_username"
+            android:text="afhkgj"
+            android:padding="15dp"
+            android:background="@null"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/text_light_gray"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_middle"
+            android:hint="@string/hint_password"
+            android:password="true"
+            android:text="123"
+            android:padding="15dp"
+            android:background="@null"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/text_light_gray"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_middle"
+            android:hint="@string/hint_confirm_password"
+            android:text="123"
+            android:password="true"
+            android:padding="15dp"
+            android:background="@null"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/text_light_gray"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"/>
+
+        <EditText
+            android:id="@+id/etBindId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_middle"
+            android:hint="@string/hint_bind_id"
+            android:padding="15dp"
+            android:background="@null"/>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:background="@drawable/bg_selector_white"
+        android:text="@string/register"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textSize="@dimen/text_middle"
+        android:textColor="@color/text_dark_gray"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/llRegister"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:background="@drawable/bg_selector_white"
+        android:text="@string/cancel"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:textSize="@dimen/text_middle"
+        android:textColor="@color/text_dark_gray"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/llRegister"
+        android:layout_marginTop="50dp"/>
+
+</RelativeLayout>
