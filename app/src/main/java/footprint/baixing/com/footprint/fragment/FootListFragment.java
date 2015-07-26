@@ -39,6 +39,7 @@ public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapte
         if(null != footPrint && null != footPrint.getFoot()) {
             intent.putExtra("title", footPrint.getFoot().getTitle());
             intent.putExtra("url", footPrint.getFoot().getUrl());
+            intent.putExtra("footId",footPrint.getFoot().getId());
             startActivity(intent);
         }
     }

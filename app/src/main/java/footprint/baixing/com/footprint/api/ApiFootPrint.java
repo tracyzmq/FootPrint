@@ -42,7 +42,7 @@ public class ApiFootPrint {
         return null;
     }
 
-    static public boolean logFoot(Context context, int footId, String token, boolean initiative, int time, String tag) {
+    static public boolean logFoot(Context context, int footId, String token, boolean initiative, long time, String tag) {
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("footId",footId+"");
