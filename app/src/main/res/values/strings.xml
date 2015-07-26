@@ -9,4 +9,18 @@
     <string name="hint_password">请输入密码</string>
     <string name="hint_confirm_password">请再次确认密码</string>
     <string name="hint_bind_id">绑定账号</string>
+
+    <string name="network_fail">注册失败，请检查网络后重新尝试</string>
+    <string name="network_success">登录成功</string>
+
+    <!-- time related -->
+    <string name="common_time_ago">前</string>
+    <string name="common_time_justnow">刚刚</string>
+    <string name="common_time_second">秒</string>
+    <string name="common_time_minute">分钟</string>
+    <string name="common_time_hour">小时</string>
+    <string name="common_time_day">天</string>
+    <string name="common_time_month">月</string>
+    <string name="common_time_one_year_ago">年</string>
+    <string name="common_time_unknow"></string>
 </resources>

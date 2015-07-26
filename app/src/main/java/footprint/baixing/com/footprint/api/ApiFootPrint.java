@@ -18,7 +18,9 @@ import footprint.baixing.com.footprint.data.FootPrint;
  */
 public class ApiFootPrint {
 
-    private static final String FOOTERLIST = "/footprint/discover";
+    private static final String FOOT_DISCOVER_LIST = "/footprint/discover.php";
+    private static final String FOOT_LOGGER = "/footprint/logger.php";
+    private static final String FOOT_MY_LIST = "/user/myfootprint.php";
 
     static public List<FootPrint> discoverFoots(Context context, String token, int from, int size) {
         try {
@@ -26,7 +28,7 @@ public class ApiFootPrint {
             params.put("token",token);
             params.put("from",from+"");
             params.put("size",size+"");
-            String json = BaseApi.postCommand(context, FOOTERLIST, params);
+            String json = BaseApi.postCommand(context, FOOT_DISCOVER_LIST, params);
             Gson gson = new Gson();
             Type type = new TypeToken<ApiResult<List<FootPrint>>>() {
             }.getType();
@@ -36,6 +38,48 @@ public class ApiFootPrint {
             }
         }catch (Exception e) {
 
+        }
+        return null;
+    }
+
+    static public boolean logFoot(Context context, int footId, String token, boolean initiative, int time, String tag) {
+        try {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("footId",footId+"");
+            params.put("token",token);
+            params.put("initiative",initiative+"");
+            params.put("time",time+"");
+            params.put("tag",tag);
+            String json = BaseApi.postCommand(context, FOOT_LOGGER, params);
+            Gson gson = new Gson();
+            Type type = new TypeToken<ApiResult<Object>>() {
+            }.getType();
+            ApiResult<Object> result = gson.fromJson(json, type);
+            if(null != result) {
+                return result.getOk() == 1;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    static public List<FootPrint> myFoots(Context context, String token, int from, int size) {
+        try {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("token",token);
+            params.put("from",from+"");
+            params.put("size",size+"");
+            String json = BaseApi.postCommand(context, FOOT_MY_LIST, params);
+            Gson gson = new Gson();
+            Type type = new TypeToken<ApiResult<List<FootPrint>>>() {
+            }.getType();
+            ApiResult<List<FootPrint>> result = gson.fromJson(json, type);
+            if(null != result) {
+                return result.getData();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

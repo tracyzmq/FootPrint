@@ -9,7 +9,6 @@ public class User implements Serializable{
 
     private int userId;
     private String username;
-    private boolean password;
     private String tag;
     private String token;
     private int expireTime;
@@ -28,14 +27,6 @@ public class User implements Serializable{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public boolean isPassword() {
-        return password;
-    }
-
-    public void setPassword(boolean password) {
-        this.password = password;
     }
 
     public String getTag() {

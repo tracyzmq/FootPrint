@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="60dp"
-    android:orientation="horizontal"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="70dp"
     android:gravity="center_vertical"
-    android:padding="@dimen/item_horizontal_margin"
-    android:background="@color/white">
+    android:background="@color/text_light_gray">
 
     <TextView
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_xsmall"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="07月26日 16:07"
+        android:layout_marginTop="@dimen/item_horizontal_margin"/>
 
     <ImageView
+        android:id="@+id/icon"
         android:layout_width="@dimen/item_footicon"
         android:layout_height="@dimen/item_footicon"
-        android:src="@mipmap/timeline_foot"
-        android:layout_margin="@dimen/item_horizontal_margin"/>
+        android:src="@mipmap/foot_icon"
+        android:layout_below="@+id/timestamp"
+        android:layout_alignRight="@+id/timestamp"/>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/dark_green"
+        android:layout_toRightOf="@+id/timestamp"/>
 
     <RelativeLayout
+        android:layout_toRightOf="@+id/timestamp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/item_horizontal_margin"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_white_corner"
         android:padding="2dp">
 
         <ImageView
@@ -37,8 +52,7 @@
             android:layout_alignTop="@+id/avartar"
             android:singleLine="true"
             android:textColor="@color/text_dark_gray"
-            android:textSize="@dimen/text_middle"
-            android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"/>
+            android:textSize="@dimen/text_middle"/>
 
         <TextView
             android:id="@+id/subTitle"
@@ -46,11 +60,34 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/avartar"
             android:layout_alignBottom="@+id/avartar"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="8dp"
             android:singleLine="true"
             android:textColor="@color/text_gray"
-            android:textSize="@dimen/text_small"
-            android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"/>
+            android:textSize="@dimen/text_small"/>
+
+        <TextView
+            android:id="@+id/tvLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_xxsmall"
+            android:textColor="@color/text_light_gray"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/timeline_foot"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
+
+        <ImageView
+            android:id="@+id/ivLike"
+            android:layout_toLeftOf="@+id/tvLike"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/icon_fav"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

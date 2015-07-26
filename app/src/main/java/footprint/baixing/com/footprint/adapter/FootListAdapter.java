@@ -13,10 +13,9 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.ColorRes;
 
-import java.util.List;
-
 import footprint.baixing.com.footprint.R;
 import footprint.baixing.com.footprint.data.FootPrint;
+import footprint.baixing.com.footprint.util.SystemUtils;
 
 /**
  * Created by zhangtracy on 15/7/25.
@@ -59,6 +58,12 @@ public class FootListAdapter extends BaseListAdatper<FootPrint> {
         @ViewById
         TextView subTitle;
 
+        @ViewById
+        ImageView ivLike;
+
+        @ViewById
+        TextView tvLike;
+
         public FootPrintItemView(Context context) {
             super(context);
         }
@@ -66,6 +71,12 @@ public class FootListAdapter extends BaseListAdatper<FootPrint> {
         public void bind(FootPrint foot) {
             avartar.setBackgroundColor(yelloe_white);
             if(null != foot && null != foot.getFoot()) {
+                if(foot.getTimestamp() != 0) {
+                    timestamp.setVisibility(View.VISIBLE);
+                    timestamp.setText(SystemUtils.getFormatTime(foot.getTimestamp()));
+                } else {
+                    timestamp.setVisibility(View.GONE);
+                }
                 if(!TextUtils.isEmpty(foot.getFoot().getTitle())) {
                     title.setVisibility(View.VISIBLE);
                     title.setText(foot.getFoot().getTitle());
@@ -79,6 +90,9 @@ public class FootListAdapter extends BaseListAdatper<FootPrint> {
                 } else {
                     subTitle.setVisibility(View.GONE);
                 }
+
+//                ivLike.setVisibility(View.VISIBLE);
+//                tvLike.setText(foot.getFoot().getLike());
             }
         }
     }

@@ -22,7 +22,7 @@
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_middle"
             android:hint="@string/hint_username"
-            android:text="afhkgj"
+            android:text="tracy"
             android:padding="15dp"
             android:background="@null"/>
 
