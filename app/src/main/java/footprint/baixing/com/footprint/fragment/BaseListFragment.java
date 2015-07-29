@@ -69,15 +69,21 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
     @AfterViews
     void initViews() {
         initFooterView(getActivity());
+        if(null != getHeaderView(getActivity())) {
+            listview.addHeaderView(getHeaderView(getActivity()));
+        }
         ActionBarPullToRefresh.from(getActivity())
                 .allChildrenArePullable()
                 .listener(this)
                 .setup(ptr_layout);
 
+
         listview.setOnScrollListener(this);
         ptr_layout.setRefreshing(true);
         processRefresh();
     }
+
+    abstract public View getHeaderView(Context context);
 
     @UiThread
     void setUI() {
@@ -104,6 +110,7 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
                 setUI();
             } else if(current == 0) {
                 setUI();
+                showFooterOnComplete();
             } else {
                 showFooterOnComplete();
             }
@@ -138,9 +145,13 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
         ptr_layout.setRefreshing(false);
         isCompleted = true;
         if(null != mFooterView && null != tvFooter && null !=  pbFooter) {
-            mFooterView.setVisibility(View.VISIBLE);
-            tvFooter.setText("已经到底了哦～～");
-            pbFooter.setVisibility(View.INVISIBLE);
+            if(current == 0) {
+                mFooterView.setVisibility(View.GONE);
+            } else {
+                mFooterView.setVisibility(View.VISIBLE);
+                tvFooter.setText("已经到底了哦～～");
+                pbFooter.setVisibility(View.INVISIBLE);
+            }
         }
     }
 

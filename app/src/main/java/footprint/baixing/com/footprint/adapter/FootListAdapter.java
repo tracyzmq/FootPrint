@@ -84,9 +84,9 @@ public class FootListAdapter extends BaseListAdatper<FootPrint> {
                     title.setVisibility(View.GONE);
                 }
 
-                if(!TextUtils.isEmpty(foot.getFoot().getSuibTitle())) {
+                if(!TextUtils.isEmpty(foot.getFoot().getSubTitle())) {
                     subTitle.setVisibility(View.VISIBLE);
-                    subTitle.setText(foot.getFoot().getSuibTitle());
+                    subTitle.setText(foot.getFoot().getSubTitle());
                 } else {
                     subTitle.setVisibility(View.GONE);
                 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Foot implements Serializable {
     private String url;
     private String title;
-    private String suibTitle;
+    private String subTitle;
     private int id;
     private int like;
 
@@ -44,11 +44,11 @@ public class Foot implements Serializable {
         this.like = like;
     }
 
-    public String getSuibTitle() {
-        return suibTitle;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setSuibTitle(String suibTitle) {
-        this.suibTitle = suibTitle;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
     }
 }

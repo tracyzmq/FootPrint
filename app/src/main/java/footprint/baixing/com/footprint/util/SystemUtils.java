@@ -40,6 +40,22 @@ public class SystemUtils {
 
     }
 
+    public static User getUser(Context context) {
+        String json = SystemUtils.loadFromLocal(context, Constant.FILE_USER);
+        try {
+            Gson gson = new Gson();
+            Type type = new TypeToken<ApiResult<User>>() {
+            }.getType();
+            ApiResult<User> user = gson.fromJson(json, type);
+            if(null != user && null != user.getData() && !TextUtils.isEmpty(user.getData().getToken())) {
+                return user.getData();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String getToken(Context context) {
         String json = SystemUtils.loadFromLocal(context, Constant.FILE_USER);
         try {
@@ -107,7 +123,7 @@ public class SystemUtils {
 
     public static final String getFormatTime(long timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("", Locale.SIMPLIFIED_CHINESE);
-        sdf.applyPattern("MM月dd日 HH:MM");
+        sdf.applyPattern("HH:MM");
         return sdf.format(timestamp * 1000);
     }
 }

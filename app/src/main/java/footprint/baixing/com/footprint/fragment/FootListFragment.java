@@ -1,7 +1,9 @@
 package footprint.baixing.com.footprint.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
@@ -24,17 +26,12 @@ public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapte
     String token = "";
 
     @Override
-    public void onResume() {
-        super.onResume();
+    List<FootPrint> getMore(int from, int size) {
         token = SystemUtils.getToken(getActivity());
         if(TextUtils.isEmpty(token)) {
             startActivity(new Intent(getActivity(), LoginActivity_.class));
             getActivity().finish();
         }
-    }
-
-    @Override
-    List<FootPrint> getMore(int from, int size) {
         return ApiFootPrint.discoverFoots(getActivity(), token, from, size);
     }
 
@@ -43,6 +40,11 @@ public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapte
         adapter = new FootListAdapter(getActivity());
         adapter.setData(listData);
         return adapter;
+    }
+
+    @Override
+    public View getHeaderView(Context context) {
+        return null;
     }
 
     @ItemClick

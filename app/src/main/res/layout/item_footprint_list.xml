@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="70dp"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
     android:gravity="center_vertical"
     android:background="@color/text_light_gray">
 
@@ -8,34 +9,31 @@
         android:id="@+id/timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_xsmall"
-        android:paddingLeft="3dp"
+        android:textSize="@dimen/text_small"
+        android:paddingLeft="6dp"
         android:paddingRight="3dp"
-        android:text="07月26日 16:07"
         android:layout_marginTop="@dimen/item_horizontal_margin"/>
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="@dimen/item_footicon"
-        android:layout_height="@dimen/item_footicon"
-        android:src="@mipmap/foot_icon"
-        android:layout_below="@+id/timestamp"
-        android:layout_alignRight="@+id/timestamp"/>
 
     <View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@color/dark_green"
-        android:layout_toRightOf="@+id/timestamp"/>
+        android:layout_marginLeft="45dp"/>
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/icon_dot"/>
 
     <RelativeLayout
-        android:layout_toRightOf="@+id/timestamp"
+        android:layout_toRightOf="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/item_horizontal_margin"
-        android:layout_centerVertical="true"
-        android:background="@drawable/bg_white_corner"
-        android:padding="2dp">
+        android:layout_centerVertical="true">
 
         <ImageView
             android:id="@+id/avartar"
@@ -50,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/avartar"
             android:layout_alignTop="@+id/avartar"
-            android:singleLine="true"
             android:textColor="@color/text_dark_gray"
             android:textSize="@dimen/text_middle"/>
 
@@ -62,7 +59,6 @@
             android:layout_alignBottom="@+id/avartar"
             android:layout_below="@+id/title"
             android:layout_marginTop="8dp"
-            android:singleLine="true"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_small"/>
 
