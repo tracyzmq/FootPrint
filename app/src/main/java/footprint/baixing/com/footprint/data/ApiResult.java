@@ -5,8 +5,7 @@ package footprint.baixing.com.footprint.data;
  */
 public class ApiResult<T> {
     private int ok = 0;
-    private int error;
-    private String errmsg;
+    private String error;
     private T data;
 
     public int getOk() {
@@ -17,27 +16,19 @@ public class ApiResult<T> {
         this.ok = ok;
     }
 
-    public int getError() {
-        return error;
-    }
-
-    public void setError(int error) {
-        this.error = error;
-    }
-
-    public String getErrmsg() {
-        return errmsg;
-    }
-
-    public void setErrmsg(String errmsg) {
-        this.errmsg = errmsg;
-    }
-
     public T getData() {
         return data;
     }
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

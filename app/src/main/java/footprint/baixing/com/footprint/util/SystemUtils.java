@@ -22,13 +22,22 @@ import footprint.baixing.com.footprint.data.User;
  */
 public class SystemUtils {
 
-    public static void saveToLocal(Context context, String filename, String json) {
-        context.getSharedPreferences(filename, Context.MODE_PRIVATE).edit().putString("data", json).commit();
+    public static void saveToLocal(Context context, String filename, String json, long expiredTime) {
+        context.getSharedPreferences(filename, Context.MODE_PRIVATE).edit()
+                .putString("data", json)
+                .putLong("expiredTime", System.currentTimeMillis()+expiredTime)
+                .commit();
     }
 
     public static String loadFromLocal(Context context, String filename) {
         SharedPreferences preferences = context.getSharedPreferences(filename, Context.MODE_PRIVATE);
-        return preferences.getString("data", "");
+        long expiredTime = preferences.getLong("expiredTime", 0);
+        if(System.currentTimeMillis() <= expiredTime) {
+            return preferences.getString("data", "");
+        } else {
+            return "";
+        }
+
     }
 
     public static String getToken(Context context) {

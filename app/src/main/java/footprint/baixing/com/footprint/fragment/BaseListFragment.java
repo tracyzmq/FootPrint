@@ -102,6 +102,8 @@ public abstract class BaseListFragment<T extends Serializable, S extends BaseAda
             if (list.size() == Constant.PER_PAGE) {
                 current += Constant.PER_PAGE;
                 setUI();
+            } else if(current == 0) {
+                setUI();
             } else {
                 showFooterOnComplete();
             }

@@ -77,7 +77,7 @@ public class RegisterActivity extends BaseActivity {
             ApiResult<User> result = gson.fromJson(json, type);
             if(null != result) {
                 if(result.getOk() != 1) {
-                    FootToast.makeText(this, result.getErrmsg(), Toast.LENGTH_SHORT);
+                    FootToast.makeText(this, result.getError(), Toast.LENGTH_SHORT);
                 } else {
                     user = result.getData();
                 }
@@ -89,7 +89,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         if(null != user) {
-            SystemUtils.saveToLocal(this, Constant.FILE_USER, json);
+            SystemUtils.saveToLocal(this, Constant.FILE_USER, json, user.getExpireTime());
             startActivity(new Intent(this, FootListActivity_.class));
         } else {
             FootToast.makeText(this, network_fail, Toast.LENGTH_SHORT);

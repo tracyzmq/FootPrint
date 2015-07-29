@@ -50,7 +50,7 @@ public class ApiFootPrint {
             params.put("initiative",initiative+"");
             params.put("time",time+"");
             params.put("tag",tag);
-            String json = BaseApi.postCommand(context, FOOT_LOGGER, params);
+            String json = BaseApi.getCommand(context, FOOT_LOGGER, params);
             Gson gson = new Gson();
             Type type = new TypeToken<ApiResult<Object>>() {
             }.getType();
@@ -70,7 +70,7 @@ public class ApiFootPrint {
             params.put("token",token);
             params.put("from",from+"");
             params.put("size",size+"");
-            String json = BaseApi.postCommand(context, FOOT_MY_LIST, params);
+            String json = BaseApi.getCommand(context, FOOT_MY_LIST, params);
             Gson gson = new Gson();
             Type type = new TypeToken<ApiResult<List<FootPrint>>>() {
             }.getType();

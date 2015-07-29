@@ -1,5 +1,7 @@
 package footprint.baixing.com.footprint.activity;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
@@ -31,6 +33,9 @@ public class WebViewActivity extends BaseActivity implements OnRefreshListener{
 
     @Extra
     String url;
+
+    @Extra
+    int time;
 
     @ViewById
     WebView wv;
@@ -84,8 +89,8 @@ public class WebViewActivity extends BaseActivity implements OnRefreshListener{
     protected void onPause() {
         super.onPause();
         //停留超过1分钟
-        long interval = (System.currentTimeMillis() - enterTime) / 1000;
-        if(interval >= 60L) {
+        long interval = System.currentTimeMillis() - enterTime;
+        if(interval >= time) {
             callLogApi(interval);
         }
     }
@@ -98,6 +103,10 @@ public class WebViewActivity extends BaseActivity implements OnRefreshListener{
     @Background
     void callLogApi(long interval) {
         String token = SystemUtils.getToken(this);
-        ApiFootPrint.logFoot(this, footId, token, false, interval, "");
+        if(TextUtils.isEmpty(token)) {
+            startActivity(new Intent(this, LoginActivity_.class));
+        } else {
+            ApiFootPrint.logFoot(this, footId, token, false, interval, "");
+        }
     }
 }

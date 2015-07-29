@@ -1,5 +1,7 @@
 package footprint.baixing.com.footprint.fragment;
 
+import android.text.TextUtils;
+
 import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
@@ -17,7 +19,9 @@ public class MyFootListFragment extends FootListFragment {
 
     @Override
     List<FootPrint> getMore(int from, int size) {
-        String token = SystemUtils.getToken(getActivity());
+        if(TextUtils.isEmpty(token)) {
+            token = SystemUtils.getToken(getActivity());
+        }
         return ApiFootPrint.myFoots(getActivity(), token, from, size);
     }
 }

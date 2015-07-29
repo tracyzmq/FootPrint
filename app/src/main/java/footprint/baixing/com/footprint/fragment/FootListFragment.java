@@ -1,6 +1,7 @@
 package footprint.baixing.com.footprint.fragment;
 
 import android.content.Intent;
+import android.text.TextUtils;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
@@ -8,6 +9,7 @@ import org.androidannotations.annotations.ItemClick;
 import java.util.List;
 
 import footprint.baixing.com.footprint.R;
+import footprint.baixing.com.footprint.activity.LoginActivity_;
 import footprint.baixing.com.footprint.activity.WebViewActivity_;
 import footprint.baixing.com.footprint.adapter.FootListAdapter;
 import footprint.baixing.com.footprint.api.ApiFootPrint;
@@ -19,10 +21,20 @@ import footprint.baixing.com.footprint.util.SystemUtils;
  */
 @EFragment(R.layout.fragment_list)
 public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapter> {
+    String token = "";
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        token = SystemUtils.getToken(getActivity());
+        if(TextUtils.isEmpty(token)) {
+            startActivity(new Intent(getActivity(), LoginActivity_.class));
+            getActivity().finish();
+        }
+    }
 
     @Override
     List<FootPrint> getMore(int from, int size) {
-        String token = SystemUtils.getToken(getActivity());
         return ApiFootPrint.discoverFoots(getActivity(), token, from, size);
     }
 
@@ -40,6 +52,7 @@ public class FootListFragment extends BaseListFragment<FootPrint, FootListAdapte
             intent.putExtra("title", footPrint.getFoot().getTitle());
             intent.putExtra("url", footPrint.getFoot().getUrl());
             intent.putExtra("footId",footPrint.getFoot().getId());
+            intent.putExtra("time",footPrint.getTime());
             startActivity(intent);
         }
     }

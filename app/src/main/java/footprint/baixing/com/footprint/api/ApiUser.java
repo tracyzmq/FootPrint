@@ -11,7 +11,7 @@ import java.util.Map;
 public class ApiUser {
 
     private static final String USER_REGISTER = "/user/register.php";
-    private static final String USER_LOGIN = "/user/login";
+    private static final String USER_LOGIN = "/user/login.php";
 
     static public String register(Context context, String nickName, String password, String bindId, String tag) {
         Map<String, String> params = new HashMap<String, String>();

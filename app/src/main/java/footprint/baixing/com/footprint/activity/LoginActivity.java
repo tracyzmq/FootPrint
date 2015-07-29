@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity {
 
         }
         if(null != user) {
-            SystemUtils.saveToLocal(this, Constant.FILE_USER, json);
+            SystemUtils.saveToLocal(this, Constant.FILE_USER, json, user.getExpireTime());
             startActivity(new Intent(this, FootListActivity_.class));
         } else {
             FootToast.makeText(this, "登录失败，请检查网络后重新尝试", Toast.LENGTH_SHORT);
